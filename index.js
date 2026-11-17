@@ -34,11 +34,25 @@ app.get('/math/rectangle/:width/:height', (req, res) => {
   
 });
 
-//TODO2
+app.get('/math/power/:base/:exponent', (req, res) => {
+  const base = parseFloat(req.params.base);
+  const exponent = parseFloat(req.params.exponent);
+  
+  if (isNaN(base) || isNaN(exponent)) {
+    return res.status(400).json({ error: 'Niepoprawne dane' });
+  }
+
+  const result = {
+    result: (base ** exponent).toFixed(2)
+  };
 
 
-//TODO3
+  if (req.query.root === 'true') {
+    result.root = Math.pow(base, 0.5).toFixed(2);
+  }
 
+  res.json(result);
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
